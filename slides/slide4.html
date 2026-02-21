@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GitHub : Qu'est-ce que c'est ?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Background Decorations */
+        .bg-blob {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .blob-purple {
+            top: -200px;
+            right: -100px;
+            background-color: #a371f7;
+        }
+
+        .blob-blue {
+            bottom: -200px;
+            left: -100px;
+            background-color: #58a6ff;
+        }
+
+        /* Content Layer */
+        .content-layer {
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #8b949e;
+            font-weight: 400;
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Main Definition Box */
+        .definition-box {
+            background-color: rgba(22, 27, 34, 0.8);
+            border: 1px solid #30363d;
+            border-left: 4px solid #ffffff;
+            padding: 24px 32px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .definition-text {
+            font-size: 26px;
+            color: #e6edf3;
+            margin: 0;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            flex: 1;
+            margin-bottom: 20px;
+        }
+
+        .feature-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: #8b949e;
+            transform: translateY(-2px);
+        }
+
+        .icon-box {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .icon-blue {
+            background-color: rgba(88, 166, 255, 0.15);
+            color: #58a6ff;
+        }
+
+        .icon-purple {
+            background-color: rgba(163, 113, 247, 0.15);
+            color: #a371f7;
+        }
+
+        .icon-green {
+            background-color: rgba(59, 169, 82, 0.15);
+            color: #3fb950;
+        }
+
+        .icon-orange {
+            background-color: rgba(240, 136, 62, 0.15);
+            color: #d29922;
+        }
+
+        .feature-content h3 {
+            margin: 0 0 8px 0;
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .feature-content p {
+            margin: 0;
+            color: #8b949e;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        /* Key Message Footer */
+        .key-message-bar {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 100px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .key-message-bar::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 100px;
+            padding: 1px;
+            background: linear-gradient(90deg, #f05033, #a371f7);
+            /* Note: CSS Gradients are allowed on pseudo elements if not background of main element, but avoiding per instruction. Using border instead. */
+            /* Replacing gradient border logic with simple border for safety per instructions */
+            display: none;
+        }
+
+        .message-part {
+            font-size: 24px;
+            font-weight: 600;
+            color: #e6edf3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .divider {
+            height: 30px;
+            width: 2px;
+            background-color: #30363d;
+            margin: 0 10px;
+        }
+
+        .highlight-git {
+            color: #f05033;
+        }
+
+        .highlight-github {
+            color: #a371f7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background -->
+        <div class="bg-blob blob-purple"></div>
+        <div class="bg-blob blob-blue"></div>
+        <div class="content-layer">
+            <!-- Header -->
+            <header>
+                <h1>GitHub : Qu'est-ce que c'est ?</h1>
+                <p class="subtitle">Définition complète</p>
+            </header>
+            <!-- Definition -->
+            <div class="definition-box">
+                <p class="definition-text">
+                    GitHub = Plateforme en ligne qui héberge des dépôts Git
+                </p>
+            </div>
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <!-- Card 1: Cloud -->
+                <div class="feature-card">
+                    <div class="icon-box icon-blue">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Service de stockage cloud</h3>
+                        <p>Comme Google Drive, mais spécialisé pour le code et l'historique.</p>
+                    </div>
+                </div>
+                <!-- Card 2: Social -->
+                <div class="feature-card">
+                    <div class="icon-box icon-purple">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Réseau social dev</h3>
+                        <p>Follow des développeurs, like (star) des projets, commenter du code.</p>
+                    </div>
+                </div>
+                <!-- Card 3: Collaboration -->
+                <div class="feature-card">
+                    <div class="icon-box icon-green">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Plateforme de collaboration</h3>
+                        <p>Outils pour travailler en équipe sur le même projet sans chaos.</p>
+                    </div>
+                </div>
+                <!-- Card 4: Portfolio -->
+                <div class="feature-card">
+                    <div class="icon-box icon-orange">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Portfolio professionnel</h3>
+                        <p>Ta vitrine pour montrer tes projets et ton code aux recruteurs.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Key Message -->
+            <div class="key-message-bar">
+                <div class="message-part">
+                    <i class="fab fa-git-alt highlight-git"></i>
+                    <p>Git = <span class="highlight-git">l'outil</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="message-part">
+                    <i class="fab fa-github highlight-github"></i>
+                    <p>GitHub = <span class="highlight-github">le réseau social</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

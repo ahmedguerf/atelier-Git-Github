@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Git vs GitHub - La différence essentielle</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Background Accents */
+        .bg-glow-left {
+            position: absolute;
+            top: 50%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background-color: rgba(240, 80, 51, 0.05);
+            /* Git Orange */
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+        }
+
+        .bg-glow-right {
+            position: absolute;
+            top: 50%;
+            right: 20%;
+            transform: translate(50%, -50%);
+            width: 500px;
+            height: 500px;
+            background-color: rgba(163, 113, 247, 0.05);
+            /* GitHub Purple */
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+        }
+
+        /* Header */
+        header {
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #8b949e;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        /* Main Comparison Container */
+        .comparison-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex: 1;
+            z-index: 10;
+            width: 100%;
+        }
+
+        /* Cards */
+        .card {
+            flex: 1;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 40px;
+            height: 520px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-git {
+            border-top: 6px solid #f05033;
+        }
+
+        .card-github {
+            border-top: 6px solid #a371f7;
+        }
+
+        /* Card Header */
+        .card-header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 20px;
+        }
+
+        .card-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .card-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #e6edf3;
+            margin: 0 0 8px 0;
+        }
+
+        .card-subtitle {
+            font-size: 18px;
+            color: #8b949e;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+            background-color: #21262d;
+            padding: 4px 12px;
+            border-radius: 100px;
+            display: inline-block;
+        }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 20px;
+            color: #c9d1d9;
+        }
+
+        .feature-icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(56, 139, 253, 0.1);
+            color: #58a6ff;
+            flex-shrink: 0;
+        }
+
+        .card-git .feature-icon-box {
+            background-color: rgba(240, 80, 51, 0.1);
+            color: #f05033;
+        }
+
+        .card-github .feature-icon-box {
+            background-color: rgba(163, 113, 247, 0.1);
+            color: #a371f7;
+        }
+
+        /* Arrow Connector */
+        .connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #8b949e;
+            gap: 10px;
+            width: 100px;
+        }
+
+        .arrow-line {
+            height: 2px;
+            width: 100%;
+            background-color: #30363d;
+            position: relative;
+        }
+
+        .arrow-icon {
+            font-size: 32px;
+            color: #8b949e;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+                transform: scale(0.9);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+
+            100% {
+                opacity: 0.5;
+                transform: scale(0.9);
+            }
+        }
+
+        /* Tags */
+        .tag {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+
+        .tag-local {
+            background-color: rgba(240, 80, 51, 0.2);
+            color: #ffdfd8;
+        }
+
+        .tag-cloud {
+            background-color: rgba(163, 113, 247, 0.2);
+            color: #d8b9ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background Decorations -->
+        <div class="bg-glow-left"></div>
+        <div class="bg-glow-right"></div>
+        <!-- Header -->
+        <header>
+            <h1>Git vs GitHub</h1>
+            <p class="subtitle">La différence essentielle</p>
+        </header>
+        <!-- Comparison Content -->
+        <div class="comparison-container">
+            <!-- Git Card -->
+            <div class="card card-git">
+                <div class="card-header">
+                    <i class="fab fa-git-alt card-icon" style="color: #f05033;"></i>
+                    <h2 class="card-title">GIT</h2>
+                    <p class="card-subtitle">(Sur ton PC)</p>
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-icon-box">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <p style="margin: 0; flex: 1;">Gestionnaire de versions</p>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon-box">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <p style="margin: 0; flex: 1;">Local</p>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon-box">
+                            <i class="fas fa-plane-slash"></i>
+                        </div>
+                        <p style="margin: 0; flex: 1;">Hors ligne</p>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon-box">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <p style="margin: 0; flex: 1;">Ligne de commande</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- Connector -->
+            <div class="connector">
+                <p style="font-family: 'JetBrains Mono'; font-size: 12px; margin: 0; color: #8b949e;">PUSH</p>
+                <i class="fas fa-arrow-right arrow-icon"></i>
+                <i class="fas fa-arrow-left arrow-icon" style="font-size: 24px; opacity: 0.5;"></i>
+                <p style="font-family: 'JetBrains Mono'; font-size: 12px; margin: 0; color: #8b949e;">PULL</p>
+            </div>
+            <!-- GitHub Card -->
+            <div class="card card-github">
+                <div class="card-header">
+                    <i class="fab fa-github card-icon" style="color: #ffffff;"></i>
+                    <h2 class="card-title">GITHUB</h2>
+                    <p class="card-subtitle">(Sur Internet)</p>
+                </div>
+                <ul class="feature-list">
+                    <li class="feature-item">
+                        <div class="feature-icon-box">
+                            <i class="fas fa-cloud-arrow-up"></i>
+                        </div>
+                        <p style="margin: 0; flex: 1;">Cloud / Backup</p>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon-box">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <p style="margin: 0; flex: 1;">Collaboration</p>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon-box">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <p style="margin: 0; flex: 1;">Réseau social</p>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon-box">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <p style="margin: 0; flex: 1;">Portfolio</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

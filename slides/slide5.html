@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Vocabulaire de base - Les 6 mots à retenir</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Background Elements */
+        .bg-decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .glow-spot {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background-color: rgba(56, 139, 253, 0.05);
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        .glow-1 {
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            bottom: -100px;
+            right: -100px;
+            background-color: rgba(46, 160, 67, 0.05);
+        }
+
+        /* Header */
+        header {
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #8b949e;
+            font-weight: 400;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+        }
+
+        /* Grid Layout */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 24px;
+            z-index: 10;
+            flex: 1;
+        }
+
+        /* Card Style */
+        .vocab-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vocab-card:hover {
+            transform: translateY(-4px);
+            border-color: #58a6ff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        /* Color Variants for Icons */
+        .color-blue {
+            background-color: rgba(56, 139, 253, 0.15);
+            color: #58a6ff;
+        }
+
+        .color-orange {
+            background-color: rgba(210, 153, 34, 0.15);
+            color: #d29922;
+        }
+
+        .color-green {
+            background-color: rgba(63, 185, 80, 0.15);
+            color: #3fb950;
+        }
+
+        .color-purple {
+            background-color: rgba(163, 113, 247, 0.15);
+            color: #a371f7;
+        }
+
+        .color-red {
+            background-color: rgba(248, 81, 73, 0.15);
+            color: #f85149;
+        }
+
+        .color-teal {
+            background-color: rgba(56, 139, 253, 0.15);
+            color: #7ee787;
+        }
+
+        /* Using a teal-ish variant */
+
+        .term-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .definition-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            color: #8b949e;
+            line-height: 1.5;
+            margin: 0;
+            flex: 1;
+        }
+
+        /* Context Badge */
+        .context-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background-color: #21262d;
+            color: #8b949e;
+            border: 1px solid #30363d;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background -->
+        <div class="bg-decoration">
+            <div class="glow-spot glow-1"></div>
+            <div class="glow-spot glow-2"></div>
+        </div>
+        <!-- Header -->
+        <header>
+            <h1>Vocabulaire de base</h1>
+            <p class="subtitle">Les 6 mots à retenir</p>
+        </header>
+        <!-- Content Grid -->
+        <div class="vocab-grid">
+            <!-- Card 1: Repository -->
+            <div class="vocab-card">
+                <div class="card-header">
+                    <div class="icon-box color-blue">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="term-title">REPOSITORY</h3>
+                </div>
+                <p class="definition-text">
+                    Le dossier de ton projet qui contient tous tes fichiers et l'historique des modifications (sur Git
+                    ou GitHub).
+                </p>
+                <div class="context-badge">STOCKAGE</div>
+            </div>
+            <!-- Card 2: Commit -->
+            <div class="vocab-card">
+                <div class="card-header">
+                    <div class="icon-box color-orange">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="term-title">COMMIT</h3>
+                </div>
+                <p class="definition-text">
+                    Une photo instantanée de ton code à un moment précis. C'est un point de sauvegarde avec un message.
+                </p>
+                <div class="context-badge">ACTION</div>
+            </div>
+            <!-- Card 3: Branche -->
+            <div class="vocab-card">
+                <div class="card-header">
+                    <div class="icon-box color-green">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3 class="term-title">BRANCHE</h3>
+                </div>
+                <p class="definition-text">
+                    Une timeline parallèle pour tester des idées ou développer une fonctionnalité sans casser le projet
+                    principal.
+                </p>
+                <div class="context-badge">STRUCTURE</div>
+            </div>
+            <!-- Card 4: Merge -->
+            <div class="vocab-card">
+                <div class="card-header">
+                    <div class="icon-box color-purple">
+                        <i class="fas fa-code-merge"></i>
+                    </div>
+                    <h3 class="term-title">MERGE</h3>
+                </div>
+                <p class="definition-text">
+                    L'action de fusionner deux branches ensemble (par exemple, intégrer ta fonctionnalité finie dans le
+                    projet principal).
+                </p>
+                <div class="context-badge">ACTION</div>
+            </div>
+            <!-- Card 5: Push -->
+            <div class="vocab-card">
+                <div class="card-header">
+                    <div class="icon-box color-blue">
+                        <i class="fas fa-cloud-arrow-up"></i>
+                    </div>
+                    <h3 class="term-title">PUSH</h3>
+                </div>
+                <p class="definition-text">
+                    Envoyer son code et son historique depuis ton ordinateur (Git local) vers le serveur (GitHub
+                    distant).
+                </p>
+                <div class="context-badge">SYNC ⬆️</div>
+            </div>
+            <!-- Card 6: Pull -->
+            <div class="vocab-card">
+                <div class="card-header">
+                    <div class="icon-box color-blue">
+                        <i class="fas fa-cloud-arrow-down"></i>
+                    </div>
+                    <h3 class="term-title">PULL</h3>
+                </div>
+                <p class="definition-text">
+                    Récupérer le code et les mises à jour depuis le serveur (GitHub distant) vers ton ordinateur.
+                </p>
+                <div class="context-badge">SYNC ⬇️</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

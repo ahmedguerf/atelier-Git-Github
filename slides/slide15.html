@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Conflits - Diagramme clair · Plein écran</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            padding: 3vh 4vw;        /* padding proportionnel */
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        header {
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 2vh;
+        }
+
+        h1 {
+            font-size: clamp(32px, 6vh, 56px);
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 0.5vh 0;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: clamp(16px, 2.8vh, 28px);
+            color: #8b949e;
+            font-weight: 400;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+        }
+
+        /* Diagram Layout */
+        .diagram-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            gap: 2vw;
+            position: relative;
+            z-index: 5;
+            min-height: 0;
+        }
+
+        /* File Cards */
+        .file-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 1.2vh;
+            width: 16vw;
+            min-width: 180px;
+            max-width: 260px;
+            padding: 2vh 1.5vw;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .file-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5vw;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 1vh;
+            margin-bottom: 1.5vh;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(10px, 1.5vh, 14px);
+            color: #8b949e;
+        }
+
+        .file-content {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(14px, 2.2vh, 20px);
+            color: #e6edf3;
+            background-color: #0d1117;
+            padding: 1.5vh;
+            border-radius: 0.6vh;
+            border: 1px solid #30363d;
+        }
+
+        /* User Variations */
+        .card-alice { border-color: #58a6ff; }
+        .card-bob { border-color: #d29922; }
+        .card-original { border-color: #8b949e; }
+        .card-resolved {
+            border-color: #2ea44f;
+            width: 18vw;
+            min-width: 200px;
+        }
+
+        .user-badge {
+            position: absolute;
+            top: -1.5vh;
+            right: 1vw;
+            padding: 0.6vh 1.2vh;
+            border-radius: 2vh;
+            font-size: clamp(10px, 1.5vh, 14px);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5vw;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .badge-alice { background-color: #1f6feb; color: white; }
+        .badge-bob { background-color: #d29922; color: white; }
+
+        /* Highlight changes */
+        .added-alice { color: #58a6ff; font-weight: 700; }
+        .added-bob { color: #d29922; font-weight: 700; }
+        .added-merged { color: #2ea44f; font-weight: 700; }
+
+        /* Conflict Zone */
+        .conflict-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 8vw;
+            min-width: 100px;
+            position: relative;
+        }
+
+        .conflict-icon {
+            font-size: clamp(32px, 6vh, 56px);
+            color: #da3633;
+            animation: pulse 2s infinite;
+            background-color: #0d1117;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .conflict-label {
+            margin-top: 1vh;
+            color: #da3633;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: clamp(10px, 1.8vh, 16px);
+        }
+
+        /* ===== CONNECTEURS AMÉLIORÉS : COURBES PROPRES ET AJUSTÉES ===== */
+        .connector-lines {
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Solution Bar */
+        .solution-bar {
+            background-color: rgba(46, 160, 67, 0.1);
+            border: 1px solid #2ea44f;
+            padding: 1.5vh 3vh;
+            border-radius: 10vh;
+            display: flex;
+            align-items: center;
+            gap: 1.5vw;
+            margin-top: 2vh;
+            align-self: center;
+            width: fit-content;
+        }
+
+        .solution-icon {
+            background-color: #2ea44f;
+            color: white;
+            width: 5vh;
+            height: 5vh;
+            min-width: 32px;
+            min-height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(14px, 2.2vh, 20px);
+        }
+
+        .solution-text {
+            color: #e6edf3;
+            font-weight: 500;
+            font-size: clamp(14px, 2vh, 20px);
+            margin: 0;
+        }
+        .solution-text strong { color: #2ea44f; font-weight: 700; }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Grid Background */
+        .bg-dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#30363d 1px, transparent 1px);
+            background-size: 2vh 2vh;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        /* Ajustements pour petits écrans */
+        @media (max-aspect-ratio: 1/1) {
+            .diagram-wrapper {
+                flex-wrap: wrap;
+                gap: 2vh;
+            }
+            .conflict-zone {
+                order: 2;
+                width: 100%;
+                flex-direction: row;
+                gap: 2vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background -->
+        <div class="bg-dots"></div>
+
+        <!-- Header -->
+        <header>
+            <h1>Conflits</h1>
+            <p class="subtitle">Quand deux personnes modifient le même fichier</p>
+        </header>
+
+        <!-- Main Visual -->
+        <div class="diagram-wrapper">
+            <!-- ===== NOUVEAU SVG AVEC COURBES AJUSTÉES ===== -->
+            <svg class="connector-lines" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" orient="auto" refX="9" refY="3.5">
+                        <polygon fill="#30363d" points="0 0, 10 3.5, 0 7" />
+                    </marker>
+                    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" orient="auto" refX="9" refY="3.5">
+                        <polygon fill="#58a6ff" points="0 0, 10 3.5, 0 7" />
+                    </marker>
+                    <marker id="arrowhead-orange" markerWidth="10" markerHeight="7" orient="auto" refX="9" refY="3.5">
+                        <polygon fill="#d29922" points="0 0, 10 3.5, 0 7" />
+                    </marker>
+                    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" orient="auto" refX="9" refY="3.5">
+                        <polygon fill="#2ea44f" points="0 0, 10 3.5, 0 7" />
+                    </marker>
+                </defs>
+
+                <!-- 1. Lignes ORIGINAL -> ALICE (courbe élégante) -->
+                <path d="M 200,280 C 260,230 300,140 360,140" stroke="#30363d" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                <!-- 2. Lignes ORIGINAL -> BOB (courbe vers le bas) -->
+                <path d="M 200,280 C 260,330 300,420 360,420" stroke="#30363d" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+
+                <!-- 3. Lignes ALICE -> CONFLIT (courbe bleue) -->
+                <path d="M 560,140 C 600,180 600,240 640,280" stroke="#58a6ff" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#arrowhead-blue)" />
+                <!-- 4. Lignes BOB -> CONFLIT (courbe orange) -->
+                <path d="M 560,420 C 600,380 600,320 640,280" stroke="#d29922" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#arrowhead-orange)" />
+
+                <!-- 5. Ligne CONFLIT -> RÉSOLUTION (droite, mais élégante) -->
+                <path d="M 720,280 L 880,280" stroke="#2ea44f" stroke-width="2" fill="none" marker-end="url(#arrowhead-green)" />
+            </svg>
+
+            <!-- Column 1: Original -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1vh;">
+                <span style="color: #8b949e; font-size: clamp(10px, 1.8vh, 16px); font-weight: 600;">DÉBUT</span>
+                <div class="file-card card-original">
+                    <div class="file-header">
+                        <i class="far fa-file-alt"></i> README.md
+                    </div>
+                    <div class="file-content">
+                        <p>Bonjour</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2: The Users (Vertical Stack) -->
+            <div style="display: flex; flex-direction: column; gap: 6vh;">
+                <!-- Alice -->
+                <div class="file-card card-alice">
+                    <div class="user-badge badge-alice">
+                        <i class="fas fa-user-astronaut"></i> Alice
+                    </div>
+                    <div class="file-header">
+                        <i class="fas fa-code-branch" style="color: #58a6ff;"></i> feature/alice
+                    </div>
+                    <div class="file-content">
+                        <p>Bonjour <span class="added-alice">tout</span> monde</p>
+                    </div>
+                </div>
+                <!-- Bob -->
+                <div class="file-card card-bob">
+                    <div class="user-badge badge-bob">
+                        <i class="fas fa-user-ninja"></i> Bob
+                    </div>
+                    <div class="file-header">
+                        <i class="fas fa-code-branch" style="color: #d29922;"></i> feature/bob
+                    </div>
+                    <div class="file-content">
+                        <p>Bonjour <span class="added-bob">le</span> monde</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 3: Conflict -->
+            <div class="conflict-zone">
+                <div class="conflict-icon">
+                    <i class="fas fa-triangle-exclamation"></i>
+                </div>
+                <p class="conflict-label">CONFLIT !</p>
+                <p style="text-align: center; color: #8b949e; font-size: clamp(9px, 1.4vh, 14px); width: 100%; margin-top: 1vh;">
+                    Même ligne modifiée différemment
+                </p>
+            </div>
+
+            <!-- Column 4: Resolution -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1vh;">
+                <span style="color: #2ea44f; font-size: clamp(10px, 1.8vh, 16px); font-weight: 600;">RÉSULTAT</span>
+                <div class="file-card card-resolved">
+                    <div class="user-badge" style="background-color: #2ea44f; color: white; border-radius: 50%; width: 4vh; height: 4vh; min-width: 28px; min-height: 28px; padding: 0; justify-content: center;">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="file-header">
+                        <i class="fas fa-file-signature"></i> README.md (Merged)
+                    </div>
+                    <div class="file-content">
+                        <p>Bonjour <span class="added-merged">tout le monde</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Solution -->
+        <div class="solution-bar">
+            <div class="solution-icon">
+                <i class="fas fa-wrench"></i>
+            </div>
+            <p class="solution-text">
+                <span style="font-weight: 700; color: #2ea44f;">Solution :</span> Git ne peut pas deviner. Il faut
+                éditer le fichier manuellement et choisir la bonne phrase.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

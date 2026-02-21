@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pour aller plus loin - Ressources</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(#30363d 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .bg-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background-color: rgba(88, 166, 255, 0.05);
+            filter: blur(100px);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+
+        /* Header */
+        header {
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #8b949e;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            flex: 1;
+            z-index: 10;
+            margin-bottom: 20px;
+        }
+
+        /* Cards */
+        .resource-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #21262d;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        /* Specific Styles */
+        /* Documentation */
+        .card-doc {
+            border-top: 4px solid #58a6ff;
+        }
+
+        .icon-doc {
+            background-color: rgba(88, 166, 255, 0.15);
+            color: #58a6ff;
+        }
+
+        .card-doc:hover {
+            border-color: #58a6ff;
+        }
+
+        /* Practice */
+        .card-practice {
+            border-top: 4px solid #2ea44f;
+        }
+
+        .icon-practice {
+            background-color: rgba(46, 160, 67, 0.15);
+            color: #2ea44f;
+        }
+
+        .card-practice:hover {
+            border-color: #2ea44f;
+        }
+
+        /* Student */
+        .card-student {
+            border-top: 4px solid #a371f7;
+            background-color: rgba(163, 113, 247, 0.05);
+        }
+
+        .icon-student {
+            background-color: rgba(163, 113, 247, 0.2);
+            color: #a371f7;
+        }
+
+        .card-student:hover {
+            border-color: #a371f7;
+            background-color: rgba(163, 113, 247, 0.08);
+        }
+
+        /* Lists */
+        .resource-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .list-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .item-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #58a6ff;
+            font-weight: 600;
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+
+        .item-link:hover {
+            color: #79c0ff;
+            text-decoration: underline;
+        }
+
+        .item-desc {
+            color: #8b949e;
+            font-size: 14px;
+            margin: 0;
+            margin-left: 28px;
+            /* Align with text */
+        }
+
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 16px;
+            color: #e6edf3;
+            line-height: 1.5;
+        }
+
+        .action-icon {
+            color: #2ea44f;
+            margin-top: 4px;
+        }
+
+        /* Student Pack Special */
+        .student-highlight {
+            background-color: #161b22;
+            border: 1px dashed #a371f7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .highlight-text {
+            color: #c9d1d9;
+            font-size: 14px;
+            margin: 0 0 10px 0;
+        }
+
+        .highlight-bold {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 18px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .btn-student {
+            display: inline-block;
+            background-color: #2da44e;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-student:hover {
+            background-color: #2c974b;
+        }
+
+        .code-pill {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: rgba(110, 118, 129, 0.4);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background -->
+        <div class="bg-pattern"></div>
+        <div class="bg-glow"></div>
+        <!-- Header -->
+        <header>
+            <h1>Pour aller plus loin</h1>
+            <p class="subtitle">Continuez votre apprentissage</p>
+        </header>
+        <!-- Main Grid -->
+        <div class="content-grid">
+            <!-- Card 1: Documentation -->
+            <div class="resource-card card-doc">
+                <div class="card-header">
+                    <div class="card-icon icon-doc">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h2 class="card-title">Ressources</h2>
+                </div>
+                <ul class="resource-list">
+                    <li class="list-item">
+                        <a class="item-link" href="#">
+                            <i class="fas fa-globe"></i> git-scm.com/doc
+                        </a>
+                        <p class="item-desc">La documentation officielle de Git (Le livre Pro Git)</p>
+                    </li>
+                    <li class="list-item">
+                        <a class="item-link" href="#">
+                            <i class="fab fa-github"></i> docs.github.com
+                        </a>
+                        <p class="item-desc">Guides complets et tutoriels en français</p>
+                    </li>
+                    <li class="list-item">
+                        <a class="item-link" href="#">
+                            <i class="fas fa-gamepad"></i> Learn Git Branching
+                        </a>
+                        <p class="item-desc">Un jeu interactif visuel pour comprendre les branches</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- Card 2: Practice -->
+            <div class="resource-card card-practice">
+                <div class="card-header">
+                    <div class="card-icon icon-practice">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h2 class="card-title">Pratique</h2>
+                </div>
+                <ul class="resource-list">
+                    <li class="action-item">
+                        <i class="fas fa-check-circle action-icon"></i>
+                        <p style="margin:0">Utilise Git pour <strong>TOUS</strong> tes projets, même les plus petits
+                            devoirs.</p>
+                    </li>
+                    <li class="action-item">
+                        <i class="fas fa-search action-icon"></i>
+                        <p style="margin:0">Explore des repos GitHub populaires (React, Vue, etc.) pour voir les bonnes
+                            pratiques.</p>
+                    </li>
+                    <li class="action-item">
+                        <i class="fas fa-code-branch action-icon"></i>
+                        <p style="margin:0"><strong>Fork</strong> un projet open source et essaie de modifier le code
+                            localement.</p>
+                    </li>
+                    <li class="action-item">
+                        <i class="fas fa-terminal action-icon"></i>
+                        <p style="margin:0">Force-toi à utiliser le terminal avant de passer aux interfaces graphiques.
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <!-- Card 3: Student Pack -->
+            <div class="resource-card card-student">
+                <div class="card-header">
+                    <div class="card-icon icon-student">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h2 class="card-title">Student Pack</h2>
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
+                    <p style="margin: 0; color: #c9d1d9; font-size: 16px;">
+                        Si tu es étudiant, GitHub t'offre un accès incroyable à des outils pro.
+                    </p>
+                    <ul
+                        style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px;">
+                        <li style="display: flex; align-items: center; gap: 10px; color: #e6edf3;">
+                            <i class="fas fa-star" style="color: #e3b341;"></i> GitHub Pro gratuit
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 10px; color: #e6edf3;">
+                            <i class="fas fa-gift" style="color: #f78166;"></i> 50+ outils offerts
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 10px; color: #e6edf3;">
+                            <i class="fas fa-server" style="color: #79c0ff;"></i> Crédits cloud (Azure, DO...)
+                        </li>
+                    </ul>
+                    <div class="student-highlight">
+                        <p class="highlight-text">Inscris-toi avec ton email école</p>
+                        <a class="btn-student" href="#">education.github.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

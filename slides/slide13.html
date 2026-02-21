@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Commandes de branches - Git</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        /* Background Decorations */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .glow-top-right {
+            top: -200px;
+            right: -200px;
+            background-color: #f05033;
+            /* Git Orange */
+        }
+
+        .glow-bottom-left {
+            bottom: -200px;
+            left: -200px;
+            background-color: #2ea44f;
+            /* Green */
+        }
+
+        /* Header */
+        header {
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #8b949e;
+            font-weight: 400;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+        }
+
+        /* Terminal Window */
+        .terminal-window {
+            z-index: 10;
+            background-color: #161b22;
+            /* Darker window bg */
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+            font-family: 'JetBrains Mono', monospace;
+            width: 100%;
+            max-width: 960px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .terminal-header {
+            background-color: #010409;
+            padding: 14px 20px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close {
+            background-color: #ff5f56;
+        }
+
+        .minimize {
+            background-color: #ffbd2e;
+        }
+
+        .expand {
+            background-color: #27c93f;
+        }
+
+        .terminal-title {
+            margin-left: 12px;
+            font-size: 14px;
+            color: #8b949e;
+            opacity: 0.8;
+        }
+
+        .terminal-body {
+            padding: 25px 40px;
+            font-size: 20px;
+            /* Slightly smaller to fit content */
+            line-height: 1.6;
+            color: #e6edf3;
+            background-color: #0d1117;
+            position: relative;
+        }
+
+        /* Syntax Highlighting */
+        .line {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .prompt {
+            color: #f05033;
+            font-weight: 700;
+            margin-right: 12px;
+            user-select: none;
+        }
+
+        .comment {
+            color: #8b949e;
+            font-style: italic;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .command {
+            color: #79c0ff;
+            font-weight: 600;
+        }
+
+        .flag {
+            color: #79c0ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .arg {
+            color: #d2a8ff;
+        }
+
+        /* Purple for args/branch names */
+
+        /* Blinking Cursor */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #c9d1d9;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Tip Banner */
+        .tip-banner {
+            z-index: 10;
+            background-color: rgba(56, 139, 253, 0.15);
+            /* Blue tint */
+            border: 1px solid #1f6feb;
+            color: #58a6ff;
+            padding: 12px 30px;
+            border-radius: 100px;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .tip-icon {
+            background-color: #1f6feb;
+            color: #ffffff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background -->
+        <div class="bg-glow glow-top-right"></div>
+        <div class="bg-glow glow-bottom-left"></div>
+        <!-- Header -->
+        <header>
+            <h1>Commandes de branches</h1>
+            <p class="subtitle">Travailler en parallèle</p>
+        </header>
+        <!-- Terminal -->
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="window-control close"></div>
+                <div class="window-control minimize"></div>
+                <div class="window-control expand"></div>
+                <span class="terminal-title">bash — git-workflow</span>
+            </div>
+            <div class="terminal-body">
+                <!-- Command 1 -->
+                <div class="line">
+                    <span class="comment"># 1. Voir les branches</span><br />
+                    <span class="prompt">$</span><span class="command">git</span> branch
+                </div>
+                <!-- Command 2 -->
+                <div class="line">
+                    <span class="comment"># 2. Créer une nouvelle branche</span><br />
+                    <span class="prompt">$</span><span class="command">git</span> branch <span
+                        class="arg">ma-fonctionnalite</span>
+                </div>
+                <!-- Command 3 -->
+                <div class="line">
+                    <span class="comment"># 3. Changer de branche</span><br />
+                    <span class="prompt">$</span><span class="command">git</span> switch <span
+                        class="arg">ma-fonctionnalite</span>
+                </div>
+                <!-- Command 4 -->
+                <div class="line">
+                    <span class="comment"># 4. Créer ET changer (Raccourci)</span><br />
+                    <span class="prompt">$</span><span class="command">git</span> switch <span class="flag">-c</span>
+                    <span class="arg">nouvelle-branche</span>
+                </div>
+                <!-- Command 5 -->
+                <div class="line" style="margin-bottom: 0;">
+                    <span class="comment"># 5. Fusionner une branche</span><br />
+                    <span class="prompt">$</span><span class="command">git</span> merge <span
+                        class="arg">ma-fonctionnalite</span><span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+        <!-- Tip Message -->
+        <div class="tip-banner">
+            <div class="tip-icon"><i class="fas fa-code-branch"></i></div>
+            <p style="margin: 0;">Astuce : Créez toujours une branche pour chaque nouvelle fonctionnalité !</p>
+        </div>
+    </div>
+</body>
+
+</html>

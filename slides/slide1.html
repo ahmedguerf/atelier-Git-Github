@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Introduction à Git & GitHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            background-color: #0d1117;
+        }
+
+        /* Decorative Blobs */
+        .blob-blue {
+            position: absolute;
+            top: -150px;
+            right: -150px;
+            width: 600px;
+            height: 600px;
+            background-color: #1f6feb;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .blob-orange {
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 600px;
+            height: 600px;
+            background-color: #f05033;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: 0.12;
+            z-index: 1;
+        }
+
+        /* --- Nouvelle barre supérieure classe --- */
+        .top-bar {
+            z-index: 20;
+            width: 100%;
+            background: rgba(22, 27, 34, 0.85);  /* #161b22 avec transparence */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid #30363d;
+            padding: 12px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .bar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* Chaque conteneur de logo PNG (format carré pour jolie présentation) */
+        .logo-png {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: #0d1117;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: transform 0.2s, border-color 0.2s;
+            overflow: hidden;  /* pour que l'image reste dans le cadre */
+        }
+
+        .logo-png:hover {
+            transform: translateY(-2px);
+            border-color: #58a6ff;
+        }
+
+        .logo-png img {
+            max-width: 32px;
+            max-height: 32px;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .bar-divider {
+            width: 1px;
+            height: 32px;
+            background: #30363d;
+            margin: 0 16px;
+        }
+
+        .bar-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: #8b949e;
+            letter-spacing: 0.3px;
+        }
+
+        .bar-text i {
+            color: #f05033;
+            margin-right: 6px;
+        }
+
+        /* Contenu principal (centré comme avant) */
+        .content-layer {
+            z-index: 10;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: -20px; /* léger ajustement pour compenser la barre */
+        }
+
+        .logos-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .logo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .plus-separator {
+            font-size: 40px;
+            font-weight: 300;
+            color: #8b949e;
+        }
+
+        .main-title {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.1;
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 32px;
+            font-weight: 400;
+            color: #8b949e;
+            margin-bottom: 60px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .objective-pill {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            padding: 16px 32px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .objective-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #e6edf3;
+        }
+
+        .tech-accent-orange {
+            color: #f05033;
+        }
+
+        .tech-accent-purple {
+            color: #a371f7;
+        }
+
+        .version-tag {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: #484f58;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background Decorations -->
+        <div class="blob-blue"></div>
+        <div class="blob-orange"></div>
+
+        <!-- === NOUVELLE BARRE AVEC 3 LOGOS PNG === -->
+        <div class="top-bar">
+            <div class="bar-container">
+                <div class="logo-group">
+                    <!-- Logo 1 : remplacez src par votre premier PNG -->
+                    <div class="logo-png">
+                        <img src="../assets/image.png" alt="logo1" />
+                    </div>
+                    <!-- Logo 2 : deuxième PNG -->
+                    <div class="logo-png">
+                        <img src="../assets/uvt.png" alt="logo2" />
+                    </div>
+                    <!-- Logo 3 : troisième PNG -->
+                    <div class="logo-png">
+                        <img src="../assets/rose.png" alt="logo3" />
+                    </div>
+                </div>
+                <div class="bar-divider"></div>
+                <div class="bar-text">
+                    <i class="fa-regular fa-star"></i> outils essentiels
+                </div>
+                <div style="flex:1;"></div> <!-- pousse tout à gauche sauf si on veut équilibrer -->
+                <div class="bar-text hidden md:block">
+                    <i class="fa-regular fa-folder-open"></i> atelier
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenu principal (identique mais centré sous la barre) -->
+        <div class="content-layer">
+            <!-- Logos Section (Git + GitHub) -->
+            <div class="logos-wrapper">
+                <div class="logo-box">
+                    <!-- Git Logo PNG existant (conservé) -->
+                    <img alt="Git Logo"
+                        src="https://page.gensparksite.com/slides_images/dd628821080702b0b1807402b4f01c18.png"
+                        style="height: 140px; width: auto;" />
+                </div>
+                <div class="plus-separator">
+                    <i class="fa-solid fa-xmark" style="transform: rotate(45deg);"></i>
+                </div>
+                <div class="logo-box">
+                    <!-- GitHub Logo (FontAwesome) -->
+                    <i class="fab fa-github" style="font-size: 140px; color: #ffffff;"></i>
+                </div>
+            </div>
+            <!-- Title Section -->
+            <div style="text-align: center;">
+                <h1 class="main-title">
+                    Introduction à <br />
+                    <span class="tech-accent-orange">Git</span> &amp; <span class="tech-accent-purple">GitHub</span>
+                </h1>
+                <p class="subtitle">
+                    &lt; Présenté par Ahmed Guerfal /&gt;
+                </p>
+            </div>
+            <!-- Objective Section -->
+            <div class="objective-pill">
+                <p class="objective-text">Objectif : Maîtriser les bases</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

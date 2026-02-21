@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GitHub Pages - Site web gratuit · Plein écran</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            overflow: hidden;        /* pas de scroll */
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            box-sizing: border-box;
+            padding: 3vh 4vw;        /* padding proportionnel */
+        }
+
+        /* Background Glows (adaptés à la taille de l'écran) */
+        .glow-spot {
+            position: absolute;
+            width: 60vmin;
+            height: 60vmin;
+            border-radius: 50%;
+            filter: blur(12vmin);
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        .glow-green {
+            background-color: #2ea44f;
+            bottom: -10vh;
+            right: -10vw;
+        }
+
+        .glow-blue {
+            background-color: #58a6ff;
+            top: -10vh;
+            left: -10vw;
+        }
+
+        /* Header */
+        header {
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 2vh;
+        }
+
+        h1 {
+            font-size: clamp(36px, 6vh, 64px);
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 0.5vh 0;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: clamp(18px, 3vh, 28px);
+            color: #8b949e;
+            font-weight: 400;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+        }
+
+        /* Main Grid */
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 3vw;
+            z-index: 10;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;        /* important pour éviter les débordements */
+        }
+
+        /* Setup Panel (Left) */
+        .setup-panel {
+            flex: 1;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 1.2vh;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            height: auto;
+        }
+
+        .panel-header {
+            background-color: #010409;
+            padding: 1.2vh 2vh;
+            border-bottom: 1px solid #30363d;
+            font-weight: 600;
+            font-size: clamp(12px, 1.8vh, 16px);
+            color: #e6edf3;
+            display: flex;
+            align-items: center;
+            gap: 1vh;
+        }
+
+        .panel-body {
+            padding: 2vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2vh;
+        }
+
+        .settings-row {
+            display: flex;
+            gap: 1.5vw;
+            flex-wrap: wrap;
+        }
+
+        .settings-sidebar {
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8vh;
+        }
+
+        .sidebar-item {
+            height: 0.8vh;
+            background-color: #21262d;
+            border-radius: 0.4vh;
+            width: 100%;
+        }
+
+        .sidebar-mock-text {
+            font-size: clamp(10px, 1.4vh, 14px);
+            color: #e6edf3;
+            font-weight: 600;
+            padding: 0.4vh 0.8vh;
+            border-left: 3px solid #f78166;
+            background-color: rgba(247, 129, 102, 0.1);
+            white-space: nowrap;
+        }
+
+        .settings-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5vh;
+            min-width: 200px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6vh;
+        }
+
+        .label-mock {
+            font-size: clamp(11px, 1.5vh, 14px);
+            color: #e6edf3;
+            font-weight: 600;
+        }
+
+        .dropdown-mock {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 0.6vh;
+            padding: 0.8vh 1.2vh;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(11px, 1.5vh, 14px);
+            color: #e6edf3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .save-btn-mock {
+            background-color: #238636;
+            color: white;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            border-radius: 0.6vh;
+            padding: 0.6vh 1.6vh;
+            font-size: clamp(11px, 1.5vh, 14px);
+            font-weight: 600;
+            align-self: flex-start;
+            margin-top: 1vh;
+        }
+
+        /* Arrow */
+        .transform-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #8b949e;
+            font-size: clamp(24px, 4vh, 40px);
+            gap: 1vh;
+        }
+
+        .transform-arrow p {
+            font-size: clamp(10px, 1.5vh, 16px);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        /* Browser Window (Right) */
+        .browser-window {
+            flex: 1.2;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 1.2vh;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            max-width: 550px;
+            width: 100%;
+            height: auto;
+        }
+
+        .browser-bar {
+            background-color: #161b22;
+            padding: 1vh 1.5vh;
+            display: flex;
+            align-items: center;
+            gap: 1.5vh;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .traffic-lights {
+            display: flex;
+            gap: 0.6vh;
+        }
+
+        .light {
+            width: 1.2vh;
+            height: 1.2vh;
+            border-radius: 50%;
+            min-width: 8px;
+            min-height: 8px;
+        }
+
+        .red { background-color: #ff5f56; }
+        .yellow { background-color: #ffbd2e; }
+        .green { background-color: #27c93f; }
+
+        .address-bar {
+            flex: 1;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 0.6vh;
+            padding: 0.6vh 1.2vh;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(10px, 1.5vh, 14px);
+            color: #e6edf3;
+            display: flex;
+            align-items: center;
+            gap: 0.8vh;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lock-icon {
+            color: #2ea44f;
+            font-size: clamp(10px, 1.4vh, 14px);
+        }
+
+        .url-highlight { color: #2ea44f; font-weight: 700; }
+
+        .browser-content {
+            height: 24vh;           /* proportionnel */
+            min-height: 160px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2vh;
+        }
+
+        .web-hero {
+            text-align: center;
+            color: #24292f;
+        }
+
+        .web-avatar {
+            width: 6vh;
+            height: 6vh;
+            min-width: 40px;
+            min-height: 40px;
+            background-color: #f05033;
+            border-radius: 50%;
+            margin: 0 auto 1.5vh auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(16px, 3vh, 28px);
+        }
+
+        .web-title {
+            font-weight: 800;
+            font-size: clamp(18px, 3vh, 28px);
+            margin: 0 0 0.8vh 0;
+        }
+
+        .web-text {
+            font-size: clamp(11px, 1.8vh, 16px);
+            color: #57606a;
+            margin: 0;
+        }
+
+        .use-cases {
+            display: flex;
+            gap: 1.5vw;
+            margin-top: 2vh;
+            justify-content: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .use-case-badge {
+            background-color: rgba(56, 139, 253, 0.1);
+            border: 1px solid #1f6feb;
+            color: #58a6ff;
+            padding: 0.8vh 1.6vh;
+            border-radius: 100px;
+            font-size: clamp(11px, 1.8vh, 16px);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.8vh;
+            white-space: nowrap;
+        }
+
+        .free-badge {
+            position: absolute;
+            top: 1.5vh;
+            right: 4vw;
+            background-color: #2ea44f;
+            color: white;
+            padding: 0.8vh 1.6vh;
+            border-radius: 0.8vh;
+            font-weight: 800;
+            font-size: clamp(11px, 1.8vh, 16px);
+            transform: rotate(5deg);
+            box-shadow: 0 4px 12px rgba(46, 164, 79, 0.4);
+            z-index: 20;
+        }
+
+        /* Texte "CONFIGURATION / RÉSULTAT" */
+        .main-content > div > p {
+            font-size: clamp(12px, 2vh, 18px);
+        }
+
+        /* Chemin en pointillé */
+        .main-content > div:first-child > div:last-child {
+            padding: 1.5vh;
+            font-size: clamp(11px, 1.5vh, 14px);
+        }
+
+        /* petits ajustements */
+        @media (max-aspect-ratio: 1/1) {
+            .main-content {
+                flex-direction: column;
+                gap: 2vh;
+            }
+            .free-badge {
+                right: 2vw;
+                top: 0.5vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background Effects -->
+        <div class="glow-spot glow-blue"></div>
+        <div class="glow-spot glow-green"></div>
+
+        <!-- Header -->
+        <header>
+            <h1>GitHub Pages</h1>
+            <p class="subtitle">Hébergez votre site web gratuitement</p>
+        </header>
+
+        <!-- Main Grid -->
+        <div class="main-content">
+            <!-- Left: Configuration -->
+            <div style="display: flex; flex-direction: column; gap: 1.5vh; flex: 1; min-width: 0;">
+                <p style="text-align: center; color: #8b949e; margin: 0; font-size: clamp(12px, 2vh, 18px); font-weight: 600;">
+                    CONFIGURATION
+                </p>
+                <div class="setup-panel">
+                    <div class="panel-header">
+                        <i class="fas fa-cog"></i> Settings
+                    </div>
+                    <div class="panel-body">
+                        <div class="settings-row">
+                            <!-- Fake Sidebar -->
+                            <div class="settings-sidebar">
+                                <div class="sidebar-item"></div>
+                                <div class="sidebar-item"></div>
+                                <div class="sidebar-mock-text">Pages</div>
+                                <div class="sidebar-item"></div>
+                            </div>
+                            <!-- Main Settings Area -->
+                            <div class="settings-main">
+                                <div style="border-bottom: 1px solid #30363d; padding-bottom: 1vh; margin-bottom: 0.5vh;">
+                                    <span class="label-mock" style="font-size: clamp(13px, 2vh, 18px);">Build and deployment</span>
+                                </div>
+                                <div class="control-group">
+                                    <span class="label-mock">Source</span>
+                                    <div class="dropdown-mock">
+                                        Deploy from a branch <i class="fas fa-caret-down"></i>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <span class="label-mock">Branch</span>
+                                    <div style="display: flex; gap: 1vh;">
+                                        <div class="dropdown-mock" style="flex: 1;">
+                                            <i class="fas fa-code-branch" style="margin-right: 0.8vh; color: #8b949e;"></i> main
+                                        </div>
+                                        <div class="dropdown-mock" style="width: 80px;">
+                                            / (root)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="save-btn-mock">Save</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: rgba(13, 17, 23, 0.5); padding: 1.5vh; border-radius: 0.8vh; border: 1px dashed #30363d;">
+                    <p style="margin: 0 0 0.5vh 0; color: #e6edf3; font-size: clamp(11px, 1.5vh, 14px);"><strong>Chemin :</strong></p>
+                    <p style="margin: 0; color: #8b949e; font-family: 'JetBrains Mono', monospace; font-size: clamp(10px, 1.4vh, 13px);">
+                        Settings <i class="fas fa-chevron-right" style="font-size: 0.8vh; margin: 0 0.5vh;"></i> Pages <i
+                            class="fas fa-chevron-right" style="font-size: 0.8vh; margin: 0 0.5vh;"></i> Branch: main
+                    </p>
+                </div>
+            </div>
+
+            <!-- Center: Transformation -->
+            <div class="transform-arrow">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+
+            <!-- Right: Result -->
+            <div style="display: flex; flex-direction: column; gap: 1.5vh; flex: 1.2; position: relative; min-width: 0;">
+                <p style="text-align: center; color: #2ea44f; margin: 0; font-size: clamp(12px, 2vh, 18px); font-weight: 600;">
+                    RÉSULTAT PUBLIC
+                </p>
+                <div class="free-badge">100% GRATUIT</div>
+                <div class="browser-window">
+                    <div class="browser-bar">
+                        <div class="traffic-lights">
+                            <div class="light red"></div>
+                            <div class="light yellow"></div>
+                            <div class="light green"></div>
+                        </div>
+                        <div class="address-bar">
+                            <i class="fas fa-lock lock-icon"></i>
+                            <span>https://<span class="url-highlight">tonnom</span>.github.io/<span
+                                    class="url-highlight">tonprojet</span></span>
+                        </div>
+                    </div>
+                    <div class="browser-content">
+                        <div class="web-hero">
+                            <div class="web-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h2 class="web-title">Mon Portfolio</h2>
+                            <p class="web-text">Bienvenue sur mon site personnel hébergé par GitHub.</p>
+                            <div style="margin-top: 2vh; display: inline-block; background: #24292f; color: white; padding: 0.8vh 1.6vh; border-radius: 0.6vh; font-size: clamp(10px, 1.5vh, 14px); font-weight: bold;">
+                                Voir mes projets
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Use Cases -->
+                <div class="use-cases">
+                    <div class="use-case-badge">
+                        <i class="fas fa-briefcase"></i> Portfolio
+                    </div>
+                    <div class="use-case-badge">
+                        <i class="fas fa-book"></i> Documentation
+                    </div>
+                    <div class="use-case-badge">
+                        <i class="fas fa-rocket"></i> Projets Persos
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>GitHub Mobile - Git dans ta poche</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        /* Background Accents */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .glow-purple {
+            background-color: #8250df;
+            top: -150px;
+            right: -150px;
+        }
+
+        .glow-blue {
+            background-color: #58a6ff;
+            bottom: -150px;
+            left: -150px;
+        }
+
+        header {
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #8b949e;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        /* Main Content Layout */
+        .content-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            gap: 80px;
+            z-index: 10;
+        }
+
+        /* Phone Mockup */
+        .phone-mockup {
+            width: 300px;
+            height: 580px;
+            background-color: #010409;
+            border: 12px solid #30363d;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .phone-mockup:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        /* Notch */
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: #30363d;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            z-index: 20;
+        }
+
+        /* App UI */
+        .app-header {
+            padding: 40px 20px 20px 20px;
+            background-color: #161b22;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .app-header h3 {
+            margin: 0;
+            color: #e6edf3;
+            font-size: 18px;
+        }
+
+        .plus-btn {
+            color: #2f81f7;
+            font-size: 18px;
+        }
+
+        .app-body {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #8b949e;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .card-icon {
+            margin-top: 2px;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e6edf3;
+            margin: 0 0 4px 0;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: #8b949e;
+            margin: 0;
+        }
+
+        .icon-pr {
+            color: #238636;
+        }
+
+        .icon-issue {
+            color: #238636;
+        }
+
+        .icon-repo {
+            color: #8b949e;
+        }
+
+        .app-nav {
+            background-color: #161b22;
+            border-top: 1px solid #30363d;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            color: #8b949e;
+            font-size: 20px;
+        }
+
+        .nav-item.active {
+            color: #2f81f7;
+        }
+
+        /* Right Column Info */
+        .info-panel {
+            flex: 1;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background-color: rgba(22, 27, 34, 0.5);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid #30363d;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #21262d;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .feature-text {
+            font-size: 18px;
+            font-weight: 500;
+            color: #e6edf3;
+        }
+
+        /* Pros Cons Box */
+        .comparison-box {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 10px;
+        }
+
+        .comp-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .comp-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .check-icon {
+            color: #2ea44f;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .cross-icon {
+            color: #da3633;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .c-purple {
+            color: #8250df;
+        }
+
+        .c-blue {
+            color: #2f81f7;
+        }
+
+        .c-green {
+            color: #2ea44f;
+        }
+
+        .c-orange {
+            color: #d29922;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background -->
+        <div class="bg-glow glow-purple"></div>
+        <div class="bg-glow glow-blue"></div>
+        <!-- Header -->
+        <header>
+            <h1>GitHub Mobile</h1>
+            <p class="subtitle">Git dans ta poche 📱</p>
+        </header>
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Phone Mockup (Left) -->
+            <div class="phone-mockup">
+                <div class="notch"></div>
+                <!-- App Header -->
+                <div class="app-header">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 24px; height: 24px; background: #8b949e; border-radius: 50%;"></div>
+                        <h3>Home</h3>
+                    </div>
+                    <i class="fas fa-plus-circle plus-btn"></i>
+                </div>
+                <!-- App Body -->
+                <div class="app-body">
+                    <div>
+                        <div class="section-title">My Work</div>
+                        <div class="card">
+                            <div class="card-icon icon-pr"><i class="fas fa-code-branch"></i></div>
+                            <div class="card-content">
+                                <p class="card-title">mon-projet #42</p>
+                                <p class="card-desc">Update README.md description</p>
+                                <div style="margin-top: 6px; display: flex; gap: 6px;">
+                                    <span
+                                        style="background:#238636; color:white; font-size:10px; padding:2px 6px; border-radius:10px;">Open</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon icon-issue"><i class="far fa-dot-circle"></i></div>
+                            <div class="card-content">
+                                <p class="card-title">mon-projet #12</p>
+                                <p class="card-desc">Bug fix: Login form validation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="section-title">Favorites</div>
+                        <div class="card">
+                            <div class="card-icon icon-repo"><i class="fas fa-book"></i></div>
+                            <div class="card-content">
+                                <p class="card-title">formation-git</p>
+                                <p class="card-desc">Support de cours complet</p>
+                                <div style="margin-top: 4px; font-size: 10px; color: #8b949e;">
+                                    <i class="fas fa-star" style="color:#d29922;"></i> 128
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- App Nav -->
+                <div class="app-nav">
+                    <i class="fas fa-home nav-item active"></i>
+                    <i class="far fa-bell nav-item"></i>
+                    <i class="far fa-compass nav-item"></i>
+                    <i class="far fa-user nav-item"></i>
+                </div>
+            </div>
+            <!-- Info Panel (Right) -->
+            <div class="info-panel">
+                <!-- Features List -->
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon c-orange"><i class="far fa-bell"></i></div>
+                        <div class="feature-text">Notifications en temps réel</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon c-blue"><i class="fas fa-folder-open"></i></div>
+                        <div class="feature-text">Accès à tous mes repos</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon c-purple"><i class="far fa-comment-dots"></i></div>
+                        <div class="feature-text">Commenter les Pull Requests</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="far fa-eye"></i></div>
+                        <div class="feature-text">Lire le code et les diffs</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon c-green"><i class="fas fa-code-branch"></i></div>
+                        <div class="feature-text">Merger (fusionner) simple</div>
+                    </div>
+                </div>
+                <!-- Pros/Cons -->
+                <div class="comparison-box">
+                    <div class="comp-item">
+                        <i class="fas fa-check-circle check-icon"></i>
+                        <span style="font-weight: 600; color: #e6edf3;">Gérer ses projets depuis n'importe où</span>
+                    </div>
+                    <div class="comp-item">
+                        <i class="fas fa-times-circle cross-icon"></i>
+                        <span style="font-weight: 500; color: #8b949e;">Pas de résolution de conflits complexes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

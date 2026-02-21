@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Conclusion - Pourquoi c'est indispensable</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #0d1117;
+            padding: 50px 80px;
+            box-sizing: border-box;
+        }
+
+        /* Ambient Glows (No Gradients) */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .glow-left {
+            width: 500px;
+            height: 500px;
+            background-color: #58a6ff;
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-right {
+            width: 500px;
+            height: 500px;
+            background-color: #a371f7;
+            bottom: -100px;
+            right: -100px;
+        }
+
+        /* Header */
+        header {
+            z-index: 10;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.03em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #8b949e;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+        }
+
+        /* Main Content */
+        .content-wrapper {
+            display: flex;
+            gap: 40px;
+            flex: 1;
+            z-index: 10;
+            align-items: stretch;
+        }
+
+        /* Cards */
+        .card {
+            flex: 1;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #8b949e;
+        }
+
+        .card-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 32px;
+            border: 2px solid;
+        }
+
+        .card-studies {
+            border-top: 4px solid #58a6ff;
+        }
+
+        .card-studies .card-icon-wrapper {
+            background-color: rgba(88, 166, 255, 0.1);
+            border-color: #58a6ff;
+            color: #58a6ff;
+        }
+
+        .card-career {
+            border-top: 4px solid #2ea44f;
+        }
+
+        .card-career .card-icon-wrapper {
+            background-color: rgba(46, 160, 67, 0.1);
+            border-color: #2ea44f;
+            color: #2ea44f;
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 0 25px 0;
+        }
+
+        .feature-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: #0d1117;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border: 1px solid #21262d;
+        }
+
+        .feature-icon {
+            color: #e3b341;
+            /* Gold/Yellow for checkmarks */
+            font-size: 18px;
+        }
+
+        .feature-text {
+            font-size: 18px;
+            color: #c9d1d9;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta-container {
+            z-index: 10;
+            margin-top: 40px;
+            background-color: #1f6feb;
+            /* GitHub Blue */
+            border-radius: 16px;
+            padding: 30px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 40px rgba(31, 111, 235, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative dots for CTA */
+        .cta-dots {
+            position: absolute;
+            right: -20px;
+            bottom: -50px;
+            font-size: 200px;
+            color: rgba(255, 255, 255, 0.1);
+            transform: rotate(-15deg);
+        }
+
+        .cta-text-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .cta-main {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .cta-sub {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .cta-icon {
+            font-size: 48px;
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0);
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background Accents -->
+        <div class="glow-orb glow-left"></div>
+        <div class="glow-orb glow-right"></div>
+        <!-- Header -->
+        <header>
+            <h1>Pourquoi c'est indispensable</h1>
+            <p class="subtitle">Conclusion &amp; Prochaines étapes</p>
+        </header>
+        <!-- Main Content -->
+        <div class="content-wrapper">
+            <!-- Left Card: Studies -->
+            <div class="card card-studies">
+                <div class="card-icon-wrapper">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h2 class="card-title">Pour tes études</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle feature-icon"></i>
+                        <p class="feature-text">Travaux de groupe organisés</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-history feature-icon"></i>
+                        <p class="feature-text">Sauvegarde &amp; Historique</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-undo-alt feature-icon"></i>
+                        <p class="feature-text">Droit à l'erreur (Ctrl+Z géant)</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Card: Career -->
+            <div class="card card-career">
+                <div class="card-icon-wrapper">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h2 class="card-title">Pour ta carrière</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <i class="fas fa-chart-pie feature-icon"></i>
+                        <p class="feature-text">90% des entreprises l'utilisent</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fab fa-github feature-icon"></i>
+                        <p class="feature-text">GitHub = Ton portfolio public</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-certificate feature-icon"></i>
+                        <p class="feature-text">Preuve d'expérience technique</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Call to Action Banner -->
+        <div class="cta-container">
+            <i class="fab fa-github cta-dots"></i>
+            <div class="cta-text-group">
+                <p class="cta-main">🚀 Git n'est pas optionnel, c'est la base !</p>
+                <p class="cta-sub">GitHub = ta vitrine professionnelle</p>
+            </div>
+            <div class="cta-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

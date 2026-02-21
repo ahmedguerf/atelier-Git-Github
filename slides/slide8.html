@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Commandes de base - Les 5 commandes essentielles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #0d1117;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            align-items: center;
+        }
+
+        /* Background Decorations */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .glow-top-right {
+            top: -200px;
+            right: -200px;
+            background-color: #f05033;
+            /* Git Orange */
+        }
+
+        .glow-bottom-left {
+            bottom: -200px;
+            left: -200px;
+            background-color: #2ea44f;
+            /* Green */
+        }
+
+        /* Header */
+        header {
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #8b949e;
+            font-weight: 400;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 0;
+        }
+
+        /* Terminal Window */
+        .terminal-window {
+            z-index: 10;
+            background-color: #161b22;
+            /* Darker window bg */
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+            font-family: 'JetBrains Mono', monospace;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin-bottom: 20px;
+            flex-grow: 1;
+            /* Allow terminal to take available space */
+            max-height: 530px;
+        }
+
+        .terminal-header {
+            background-color: #010409;
+            padding: 12px 20px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .window-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close {
+            background-color: #ff5f56;
+        }
+
+        .minimize {
+            background-color: #ffbd2e;
+        }
+
+        .expand {
+            background-color: #27c93f;
+        }
+
+        .terminal-title {
+            margin-left: 12px;
+            font-size: 14px;
+            color: #8b949e;
+            opacity: 0.8;
+        }
+
+        .terminal-body {
+            padding: 15px 40px;
+            font-size: 20px;
+            /* Slightly smaller to fit all 5 commands comfortably */
+            line-height: 1.6;
+            color: #e6edf3;
+            background-color: #0d1117;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* Syntax Highlighting */
+        .line {
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .line:last-child {
+            margin-bottom: 0;
+        }
+
+        .prompt {
+            color: #f05033;
+            font-weight: 700;
+            margin-right: 12px;
+            user-select: none;
+        }
+
+        .comment {
+            color: #8b949e;
+            font-style: italic;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .command {
+            color: #79c0ff;
+            font-weight: 600;
+        }
+
+        .flag {
+            color: #79c0ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        /* Blinking Cursor */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #c9d1d9;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Tips Box - Replacing Success Banner for this slide type */
+        .tip-box {
+            position: absolute;
+            bottom: 20px;
+            right: 60px;
+            background-color: rgba(56, 139, 253, 0.1);
+            border: 1px solid rgba(56, 139, 253, 0.4);
+            color: #58a6ff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 20;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <!-- Background -->
+        <div class="bg-glow glow-top-right"></div>
+        <div class="bg-glow glow-bottom-left"></div>
+        <!-- Header -->
+        <header>
+            <h1>Commandes de base</h1>
+            <p class="subtitle">Les 5 commandes essentielles</p>
+        </header>
+        <!-- Terminal -->
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="window-control close"></div>
+                <div class="window-control minimize"></div>
+                <div class="window-control expand"></div>
+                <span class="terminal-title">bash — workflow</span>
+            </div>
+            <div class="terminal-body">
+                <div class="line">
+                    <span class="comment"># 1. Démarrer un projet</span>
+                    <span class="prompt">$</span><span class="command">git</span> init
+                </div>
+                <div class="line">
+                    <span class="comment"># 2. Voir ce qui se passe (état des fichiers)</span>
+                    <span class="prompt">$</span><span class="command">git</span> status
+                </div>
+                <div class="line">
+                    <span class="comment"># 3. Préparer des fichiers (Staging)</span>
+                    <span class="prompt">$</span><span class="command">git</span> add .
+                </div>
+                <div class="line">
+                    <span class="comment"># 4. Sauvegarder (avec message)</span>
+                    <span class="prompt">$</span><span class="command">git</span> commit <span class="flag">-m</span>
+                    <span class="string">"Message clair"</span>
+                </div>
+                <div class="line">
+                    <span class="comment"># 5. Voir l'historique</span>
+                    <span class="prompt">$</span><span class="command">git</span> log <span
+                        class="flag">--oneline</span>
+                </div>
+                <div class="line">
+                    <span class="prompt">$</span><span class="cursor"></span>
+                </div>
+            </div>
+        </div>
+        <!-- Tip Box -->
+        <div class="tip-box">
+            <i class="fas fa-lightbulb"></i>
+            <p style="margin: 0;">Astuce : Utilisez ces commandes dans cet ordre pour démarrer !</p>
+        </div>
+    </div>
+</body>
+
+</html>
